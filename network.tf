@@ -1,41 +1,49 @@
 resource "aws_vpc" "main" {
-    cidr_block = "10.219.0.0/16"
-    instance_tenancy = "default"
+  cidr_block       = "10.219.0.0/16"
+  instance_tenancy = "default"
 
   tags = {
     Provisioner = var.provisioner
     Environment = var.environment
-    Name = "Momentum"
+    Name        = "Momentum"
   }
 }
 
-resource "aws_subnet" "subnets" {
-  for_each   = {
-    for index, subnet in local.subnets:
-    subnet.name => subnet
-  }
-  
-  vpc_id     = aws_vpc.main.id
-  cidr_block = each.value.cidr_block
+module "app_subnets" {
+  source = "./modules/mom_subnets"
 
-  
-  tags = {
-    Provisioner = var.provisioner
-    Environment = var.environment
-    Name = each.value.name
-  }
+  subnet_function = "app"
+
+  environment       = var.environment
+  provisioner       = var.provisioner
+  subnet_last_octet = var.app_last_octet
+  subnet_slash      = var.app_slash
+  data_file_path    = "./data/subnets.json"
+  vpc_id            = aws_vpc.main.id
 }
 
-locals {
-  subnets = [
-    {
-        name : "appDevA"
-        cidr_block : "10.219.32.0/25"
-        availability_zone : "us-east-1a"
-    },
-    {
-        name : "appDevB"
-        cidr_block : "10.219.33.0/25"
-        availability_zone : "us-east-1b"
-    }]
-}    
+module "db_subnets" {
+  source = "./modules/mom_subnets"
+
+  subnet_function = "db"
+
+  environment       = var.environment
+  provisioner       = var.provisioner
+  subnet_last_octet = var.db_last_octet
+  subnet_slash      = var.db_slash
+  data_file_path    = "./data/subnets.json"
+  vpc_id            = aws_vpc.main.id
+}
+
+module "tgw_subnets" {
+  source = "./modules/mom_subnets"
+
+  subnet_function = "tgw"
+
+  environment       = var.environment
+  provisioner       = var.provisioner
+  subnet_last_octet = var.tgw_last_octet
+  subnet_slash      = var.tgw_slash
+  data_file_path    = "./data/subnets.json"
+  vpc_id            = aws_vpc.main.id
+}

@@ -1,0 +1,42 @@
+[
+    {
+        "name": "${function}DevA",
+        "cidr_block": "10.219.32.${last_octet}/${slash}",
+        "availability_zone": "us-east-1a"
+    },
+    {
+        "name": "${function}DevB",
+        "cidr_block": "10.219.33.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}NonProdA",
+        "cidr_block": "10.219.34.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}NonProdB",
+        "cidr_block": "10.219.35.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}ProdA",
+        "cidr_block": "10.219.36.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}ProdB",
+        "cidr_block": "10.219.37.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}DRA",
+        "cidr_block": "10.219.38.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    },
+    {
+        "name": "${function}DRB",
+        "cidr_block": "10.219.39.${last_octet}/${slash}",
+        "availability_zone": "us-east-1b"
+    }
+]
