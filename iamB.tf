@@ -16,7 +16,7 @@ resource "aws_iam_user" "users" {
   count = length(local.users)
 
   name = local.users[count.index].name
-  path = "/users/${local.users[count.index].group}"
+  path = "/users/"
 
   tags = {
     Provisioner = var.provisioner
@@ -29,12 +29,29 @@ resource "aws_iam_group" "groups" {
 
   name = each.key
   path = "/users/"
+  
+  depends_on = [
+    aws_iam_user.users
+  ]
 }
 
 resource "aws_iam_group_membership" "teams" {
   for_each = { for index, group in local.user_groups : index => group }
 
-  name = "tf-${each.key}-group-membership"
+  name  = "tf-${each.key}-group-membership"
   users = local.user_groups[each.key]
   group = aws_iam_group.groups[each.key].name
+
+  depends_on = [
+    aws_iam_user.users
+  ]
+}
+
+resource "aws_iam_group_policy_attachment" "administrator_group_policy" {
+  group      = "administrators"
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+  
+  depends_on = [
+    aws_iam_group_membership.teams
+  ]
 }
