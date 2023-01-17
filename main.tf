@@ -17,8 +17,10 @@ terraform {
 }
 
 provider "aws" {
-  alias  = "region1"
   region = "us-east-1"
 }
 
-provider = aws.region1
+provider "aws" {
+  alias  = "region1"
+  region = "us-east-1"
+}
