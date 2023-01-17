@@ -12,6 +12,8 @@ terraform {
     region = "us-east-1"
     dynamodb_table = ""
   }
+  
+  required_version = "~> 1.3.7"
 }
 
 provider "aws" {
