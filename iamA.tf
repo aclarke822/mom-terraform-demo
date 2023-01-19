@@ -17,7 +17,7 @@ resource "aws_iam_user" "philosophers" {
 resource "aws_iam_group" "philosophers_group" {
   name = "philosophers"
   path = "/users/"
-  
+
   depends_on = [
     aws_iam_user.philosophers
   ]

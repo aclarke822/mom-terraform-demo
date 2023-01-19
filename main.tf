@@ -5,14 +5,14 @@ terraform {
       version = "~> 4.47.0"
     }
   }
-  
+
   backend "s3" {
-    bucket = "mom8-remote-state-demo"
-    key = "mom-demo"
-    region = "us-east-1"
+    bucket         = "mom8-remote-state-demo"
+    key            = "mom-demo"
+    region         = "us-east-1"
     dynamodb_table = ""
   }
-  
+
   required_version = "~> 1.3.7"
 }
 

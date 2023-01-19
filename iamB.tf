@@ -29,7 +29,7 @@ resource "aws_iam_group" "groups" {
 
   name = each.key
   path = "/users/"
-  
+
   depends_on = [
     aws_iam_user.users
   ]
@@ -50,7 +50,7 @@ resource "aws_iam_group_membership" "teams" {
 resource "aws_iam_group_policy_attachment" "administrator_group_policy" {
   group      = "administrators"
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-  
+
   depends_on = [
     aws_iam_group_membership.teams
   ]

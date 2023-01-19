@@ -8,7 +8,7 @@ resource "aws_network_interface" "ec2_interface" {
   }
 }
 
-resource "aws_instance" "foo" {
+resource "aws_instance" "ec2_instance" {
   ami           = "ami-00874d747dde814fa" # us-west-2
   instance_type = "t2.micro"
 
@@ -20,7 +20,7 @@ resource "aws_instance" "foo" {
   credit_specification {
     cpu_credits = "unlimited"
   }
-  
+
   tags = {
     Provisioner = var.provisioner
     Environment = var.environment
